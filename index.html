@@ -8,19 +8,43 @@
 </head>
 <body>
 
+  <style>
+    .main-div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .sub-div {
+      border: 1px solid black;
+      padding: 20px;
+    }
+    .input-style {
+      border: 1px solid green;
+      padding: 10px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-radius: 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+  </style>
+
   <!-- 
     TODO
     1. Have a main div, this will help us in styling
     2. Layout all the things that we visually can see
    -->
 
-   <div>
-    <h1>Typing Speed Test Game</h1>
-    <input type="text" />
-    <p>Time Left: </p>
-    <p>WPM: </p>
+   <div class="main-div">
+    <div class="sub-div">
+      <h1>Typing Speed Test Game</h1>
+      <input class="input-style" type="text" />
+      <p>Time Left: </p>
+      <p>WPM: </p>
 
-    <button>Start</button>
+      <button>Start</button>
+    </div>
    </div>
   
 </body>
