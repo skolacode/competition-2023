@@ -5,6 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>World Skill Competition</title>
+
+  <script src="function.js"></script>
 </head>
 <body>
 
@@ -57,10 +59,10 @@
     <div class="sub-div">
       <h1>Typing Speed Test Game</h1>
       <input class="input-style" type="text" />
-      <p class="info-text">Time Left: </p>
+      <p class="info-text">Time Left: <span id="counter">0</span>s</p>
       <p class="info-text">WPM: </p>
 
-      <button class="btn-style">Start</button>
+      <button class="btn-style" onclick="countdown()">Start</button>
     </div>
    </div>
   
