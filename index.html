@@ -20,6 +20,7 @@
     .sub-div {
       border: 1px solid black;
       padding: 20px;
+      min-width: 500px;
     }
     .input-style {
       border: 1px solid green;
@@ -29,6 +30,7 @@
       border-radius: 10px;
       width: 100%;
       box-sizing: border-box;
+      word-break: break-all;
     }
     .info-text {
       font-weight: bold;
@@ -58,7 +60,7 @@
    <div class="main-div">
     <div class="sub-div">
       <h1>Typing Speed Test Game</h1>
-      <input class="input-style" type="text" />
+      <textarea id="random-text" class="input-style" type="text"></textarea>
       <p class="info-text">Time Left: <span id="counter">0</span>s</p>
       <p class="info-text">WPM: </p>
 
