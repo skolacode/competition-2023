@@ -29,15 +29,24 @@ function setDefaultVal() {
   const max = texts.length - 1
   const min = 0
 
+  let textInput = document.getElementById("text-input")
+  textInput.focus()
+
   const randomIndex = Math.random() * (max - min) + min;
   const theIndex = parseInt(randomIndex)
   const theText = texts[theIndex]
 
   let randomText = document.getElementById("random-text")
-  randomText.value = theText
 
-  randomText.style.height = (randomText.scrollHeight+2)+"px";
-
+  const splitTheText = theText.split('')
+  
+  splitTheText.forEach((eachChar, index) => {
+    var span = document.createElement("span");
+    span.setAttribute("id", index)
+    span.style = "border: 0.1px solid white; padding: 1px; display: inline-block;"
+    span.innerHTML = eachChar
+    randomText.appendChild(span)
+  })
 }
 
 function countdown() {
@@ -58,4 +67,36 @@ function countdown() {
 
   }, 1000)
   
+}
+
+function onValueChange() {
+  let textInput = document.getElementById("text-input")
+
+  const theInputs = textInput.value.split('')
+
+  let randomText = document.getElementById("random-text")
+  const theRandomText = randomText.innerText.split('')
+
+  theRandomText.forEach((eachChar, index) => {
+    let eachSpan = document.getElementById(index)
+    
+    if(theInputs[index] !== undefined) {
+
+      if(theInputs[index] === eachChar) {
+        eachSpan.style = "border: 0.1px solid blue; padding: 1px; display: inline-block;"
+      }
+      else {
+        eachSpan.style = "border: 0.1px solid red; padding: 1px; display: inline-block;"
+      }
+    }
+    else {
+      eachSpan.style = "border: 0.1px solid white; padding: 1px; display: inline-block;"
+    }
+  })
+}
+
+function focusTextInput() {
+  console.log("hi")
+  let textInput = document.getElementById("text-input")
+  textInput.focus()
 }
