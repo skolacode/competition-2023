@@ -77,8 +77,42 @@
     </div>
    </div>
 
+   <dialog id="dialog">
+      <!-- <form id="score-form">
+        <p>Your Score: <span id="final-score"><span></p>
+
+        <input type="text" placeholder="Enter your name" />
+        <input type="submit" value="Submit!" />
+      </form> -->
+   </dialog>
+
+   <dialog id="top-ten">
+      <p style="margin-bottom: 20px;">Top Ten:</p>
+   </dialog>
+
+   <form id="myForm" action="">
+    First name: <input type="text" name="fname"><br>
+    <button id="myButton" onsubmit="hola()" type="submit">Submit form</button>
+</form>
+
    <script>
     document.onload = setDefaultVal()
+
+    // document.getElementById("myForm").addEventListener("submit", function(e) {
+        
+    //     e.preventDefault();
+            
+    //     console.log("e: ", e)
+        
+    // });
+
+    function hola(e) {
+        
+        e.preventDefault();
+            
+        console.log("e: ", e)
+        
+    };
    </script>
   
 </body>

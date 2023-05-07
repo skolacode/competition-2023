@@ -24,7 +24,7 @@ const texts = [
 
 function setDefaultVal() {
   const counter = document.getElementById("counter")
-  counter.innerText = 60
+  counter.innerText = 10
 
   const max = texts.length - 1
   const min = 0
@@ -74,10 +74,59 @@ function countdown() {
       let textInput = document.getElementById("text-input")
       textInput.setAttribute("disabled", true)
       clearInterval(countdownTimer)
+
+      const wpm = document.getElementById("word-per-minute")
+      const wpmValue = wpm.innerText
+
+      const finalScore = document.getElementById("final-score")
+      finalScore.innerText = wpmValue
+      
+      let dialog = document.getElementById("dialog")
+      dialog.showModal()
     }
 
   }, 1000)
   
+}
+
+form = document.getElementById('form');
+
+console.log("form: ", form)
+
+function saveTheResult(evt) {
+
+  evt.preventDefault()
+
+  console.log("evt ", evt.target)
+
+  // const prevRecord = localStorage.getItem("records");
+
+  // // get the WPM point
+  // const wpm = document.getElementById("word-per-minute")
+  // const wpmValue = wpm.innerText
+
+  // if(prevRecord === null) {
+
+  //   const records = []
+
+  //   records.push({name: "", score: wpmValue})
+
+  //   localStorage.setItem("records", JSON.stringify(records))
+  // }
+  // else {
+  //   const records = JSON.parse(prevRecord)
+
+  //   // Compare the scores
+  //   records.sort((a, b) => a.score < b.score ? 1 : -1)
+
+  //   const first10Records = records.splice(0,10)
+
+  //   localStorage.setItem("records", JSON.stringify(first10Records))
+  // }
+}
+
+if(form !== null) {
+  form.addEventListener('submit', saveTheResult);
 }
 
 function onValueChange() {
