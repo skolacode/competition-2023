@@ -24,13 +24,13 @@ const texts = [
 
 function setDefaultVal() {
   const counter = document.getElementById("counter")
-  counter.innerText = 10
+  counter.innerText = 60
 
   const max = texts.length - 1
   const min = 0
 
   let textInput = document.getElementById("text-input")
-  textInput.focus()
+  textInput.setAttribute('disabled', true)
 
   const randomIndex = Math.random() * (max - min) + min;
   const theIndex = parseInt(randomIndex)
@@ -44,12 +44,21 @@ function setDefaultVal() {
     var span = document.createElement("span");
     span.setAttribute("id", index)
     span.style = "border: 0.1px solid white; padding: 1px; display: inline-block;"
-    span.innerHTML = eachChar
+    span.innerHTML = eachChar === " " ? '&#160;' : eachChar
     randomText.appendChild(span)
   })
 }
 
 function countdown() {
+
+  let textInput = document.getElementById("text-input")
+  textInput.removeAttribute("disabled")
+  textInput.focus()
+
+  // Set a first text indicator
+  const firstChar = document.getElementById("0")
+  firstChar.style = "border: 0.1px solid red; padding: 1px; display: inline-block;"
+
 
   let countdownTimer = setInterval(function timer() {
     const counter = document.getElementById("counter")
@@ -62,6 +71,8 @@ function countdown() {
 
     if(finalValue < 1) {
       console.log('run me')
+      let textInput = document.getElementById("text-input")
+      textInput.setAttribute("disabled", true)
       clearInterval(countdownTimer)
     }
 
@@ -70,33 +81,67 @@ function countdown() {
 }
 
 function onValueChange() {
-  let textInput = document.getElementById("text-input")
+  let textInput = document.getElementById("text-input").value
+  const theIndex = textInput.length - 1
 
-  const theInputs = textInput.value.split('')
+  // Split by space, this is to compare a word
+  
+  let randomText = document.getElementById("random-text").innerText
 
-  let randomText = document.getElementById("random-text")
-  const theRandomText = randomText.innerText.split('')
+  let randomTextSpan = document.getElementById("random-text").children
 
-  theRandomText.forEach((eachChar, index) => {
-    let eachSpan = document.getElementById(index)
-    
-    if(theInputs[index] !== undefined) {
+  let randomTextCombine = ''
 
-      if(theInputs[index] === eachChar) {
-        eachSpan.style = "border: 0.1px solid blue; padding: 1px; display: inline-block;"
-      }
-      else {
-        eachSpan.style = "border: 0.1px solid red; padding: 1px; display: inline-block;"
-      }
+  for(let x=0; x<randomTextSpan.length; x++) {
+    if(randomTextSpan[x].innerText.trim() === '') {
+      randomTextCombine += ' '
     }
     else {
-      eachSpan.style = "border: 0.1px solid white; padding: 1px; display: inline-block;"
+      randomTextCombine += randomTextSpan[x].innerText.trim()
     }
-  })
+  }
+  
+  if(theIndex >= 0) {
+    const theLastChar = textInput[theIndex].trim()
+    const fromRandomText = randomText[theIndex].trim()
+    
+    if(fromRandomText === theLastChar) {
+      
+      const eachSpan = document.getElementById(`${theIndex}`)
+      
+      eachSpan.style = "border: 0.1px solid green; padding: 1px; display: inline-block;"
+    }
+    else {
+      const eachSpan = document.getElementById(`${theIndex}`)
+      
+      eachSpan.style = "border: 0.1px solid red; padding: 1px; display: inline-block;"
+    }
+  }
+
+  if(textInput.length === 0) {
+    const nextSpan = document.getElementById(`0`)
+    nextSpan.style = "border: 0.1px solid white; padding: 1px; display: inline-block;"
+  }
+  else {
+    const nextSpan = document.getElementById(`${textInput.length}`)
+    nextSpan.style = "border: 0.1px solid white; padding: 1px; display: inline-block;"
+  }
+
+  const splittedText = textInput.split(' ')
+  let randomTextSplitBySpace = randomTextCombine.split(' ')
+
+  const wpm = document.getElementById(`word-per-minute`)
+  let matchedWord = 0
+  for(let i=0; i<splittedText.length; i++) {
+    if(randomTextSplitBySpace.find((each) => splittedText[i].includes(each) )) {
+      matchedWord += 1
+    }
+  }
+  wpm.innerText = matchedWord
+
 }
 
 function focusTextInput() {
-  console.log("hi")
   let textInput = document.getElementById("text-input")
   textInput.focus()
 }
