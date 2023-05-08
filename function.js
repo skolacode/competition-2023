@@ -23,6 +23,10 @@ const texts = [
 
 
 function setDefaultVal() {
+
+    const wpm = document.getElementById("word-per-minute")
+    wpm.innerText = 0
+
   const counter = document.getElementById("counter")
   counter.innerText = 10
 
@@ -49,7 +53,38 @@ function setDefaultVal() {
   })
 }
 
+function getTopTen() {
+    const prevRecord = localStorage.getItem("records");
+
+    let topTenList = document.getElementById("top-ten-list")
+
+    // remove the child first
+    for (let x = 0; x < topTenList.children.length; x++) {
+        topTenList.children[x].remove()
+    }
+
+    if (prevRecord !== null) {
+        const records = JSON.parse(prevRecord)
+
+        records.sort((a, b) => a.score < b.score ? 1 : -1)
+
+        console.log("sorted: ", records)
+
+        records.forEach((each, index) => {
+            const pTag = document.createElement('p')
+            pTag.innerText = `${index + 1} - ${each.name} - ${each.score}`
+            topTenList.append(pTag)
+        })
+    }
+}
+
 function countdown() {
+
+    const startBtn = document.getElementById("start-btn")
+
+    if (startBtn.innerText === 'Restart') {
+        location.reload();
+    }
 
   let textInput = document.getElementById("text-input")
   textInput.removeAttribute("disabled")
@@ -89,44 +124,57 @@ function countdown() {
   
 }
 
-form = document.getElementById('form');
-
-console.log("form: ", form)
-
 function saveTheResult(evt) {
 
-  evt.preventDefault()
+    evt.preventDefault()
 
-  console.log("evt ", evt.target)
+    const name = evt.target.elements[0].value
 
-  // const prevRecord = localStorage.getItem("records");
+    const prevRecord = localStorage.getItem("records");
 
-  // // get the WPM point
-  // const wpm = document.getElementById("word-per-minute")
-  // const wpmValue = wpm.innerText
+    // get the WPM point
+    const wpm = document.getElementById("word-per-minute")
+    const wpmValue = wpm.innerText
 
-  // if(prevRecord === null) {
+    if (prevRecord === null) {
 
-  //   const records = []
+        const records = []
 
-  //   records.push({name: "", score: wpmValue})
+        records.push({ name: name, score: wpmValue })
 
-  //   localStorage.setItem("records", JSON.stringify(records))
-  // }
-  // else {
-  //   const records = JSON.parse(prevRecord)
+        localStorage.setItem("records", JSON.stringify(records))
+    }
+    else {
+        const records = JSON.parse(prevRecord)
 
-  //   // Compare the scores
-  //   records.sort((a, b) => a.score < b.score ? 1 : -1)
+        records.push({ name: name, score: wpmValue })
 
-  //   const first10Records = records.splice(0,10)
+        // Compare the scores
+        records.sort((a, b) => a.score < b.score ? 1 : -1)
 
-  //   localStorage.setItem("records", JSON.stringify(first10Records))
-  // }
+        const first10Records = records.splice(0, 10)
+
+        localStorage.setItem("records", JSON.stringify(first10Records))
+    }
+
+    let dialog = document.getElementById("dialog")
+
+    dialog.close()
+
+    getTopTen()
+
+    let topTenDialog = document.getElementById("top-ten-dialog")
+
+    topTenDialog.showModal()
 }
 
-if(form !== null) {
-  form.addEventListener('submit', saveTheResult);
+function closeTopTenDialog() {
+
+    const startBtn = document.getElementById("start-btn")
+    startBtn.innerText = 'Restart'
+
+    let topTenDialog = document.getElementById("top-ten-dialog")
+    topTenDialog.close()
 }
 
 function onValueChange() {

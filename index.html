@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>World Skill Competition</title>
 
-  <script src="function.js"></script>
 </head>
 <body>
 
@@ -73,47 +72,34 @@
       <p class="info-text">Time Left: <span id="counter">0</span>s</p>
       <p class="info-text">WPM: <span id="word-per-minute">0</span></p>
 
-      <button class="btn-style" onclick="countdown()">Start</button>
+    <button id="start-btn" class="btn-style" onclick="countdown()">Start</button>
     </div>
    </div>
 
    <dialog id="dialog">
-      <!-- <form id="score-form">
+    <form id="score-form">
         <p>Your Score: <span id="final-score"><span></p>
 
-        <input type="text" placeholder="Enter your name" />
-        <input type="submit" value="Submit!" />
-      </form> -->
+            <input name="name" type="text" placeholder="Enter your name" />
+            <input type="submit" value="Submit!" />
+        </form>
    </dialog>
 
-   <dialog id="top-ten">
-      <p style="margin-bottom: 20px;">Top Ten:</p>
-   </dialog>
-
-   <form id="myForm" action="">
-    First name: <input type="text" name="fname"><br>
-    <button id="myButton" onsubmit="hola()" type="submit">Submit form</button>
-</form>
-
-   <script>
-    document.onload = setDefaultVal()
-
-    // document.getElementById("myForm").addEventListener("submit", function(e) {
-        
-    //     e.preventDefault();
-            
-    //     console.log("e: ", e)
-        
-    // });
-
-    function hola(e) {
-        
-        e.preventDefault();
-            
-        console.log("e: ", e)
-        
-    };
-   </script>
-  
+    <dialog id="top-ten-dialog">
+        <p style="margin-bottom: 20px;">Top Ten:</p>
+        <div id="top-ten-list">
+        </div>
+        <button onclick="closeTopTenDialog()">Close</button>
+    </dialog>
 </body>
+
+    <script src="function.js"></script>
+
+    <script>
+        const form  = document.getElementById("score-form")
+
+        form.addEventListener('submit', saveTheResult)
+
+        document.onload = setDefaultVal()
+        </script>
 </html>
